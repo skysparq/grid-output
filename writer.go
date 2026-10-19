@@ -18,6 +18,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sns"
 	"github.com/google/uuid"
 	gridtoisobands "github.com/skysparq/grid-to-isobands"
+	"github.com/skysparq/grid-to-isobands/contour"
 )
 
 // S3API is the subset of *s3.Client the writer uses.
@@ -51,12 +52,13 @@ type Output struct {
 	SrsWKT string // the grid's native spatial ref
 
 	// Provenance, carried into the isoband properties and the metadata record.
-	Source    string // the isobands' "source" property
-	System    string
-	Subsystem string
-	GridName  string
-	Url       string
-	Backend   gridtoisobands.Backend
+	Source          string // the isobands' "source" property
+	System          string
+	Subsystem       string
+	GridName        string
+	Url             string
+	Backend         gridtoisobands.Backend
+	SimplifyOptions *contour.SimplifyOptions
 }
 
 // Write publishes out the same way for every producer:
@@ -72,8 +74,6 @@ func (w *Writer) Write(ctx context.Context, out Output) error {
 	if !ok {
 		return fmt.Errorf(`error writing %v/%v: no defaults for measure`, out.Table, out.Measure)
 	}
-
-	defaults.Backend = out.Backend
 
 	if defaults.GeotiffOnly {
 		for _, fix := range GeometryFixes(out.Table) {
@@ -126,7 +126,8 @@ func (w *Writer) uploadIsobands(ctx context.Context, out Output, defaults Defaul
 		Floor:        defaults.Floor,
 		Step:         defaults.Step,
 		WorkDir:      w.WorkDir,
-		Backend:      defaults.Backend,
+		Backend:      out.Backend,
+		Simplify:     out.SimplifyOptions,
 	}
 	output, err := gridtoisobands.IsobandsFromGrid(ctx, args)
 	if err != nil {
