@@ -56,6 +56,7 @@ type Output struct {
 	Subsystem string
 	GridName  string
 	Url       string
+	Backend   gridtoisobands.Backend
 }
 
 // Write publishes out the same way for every producer:
