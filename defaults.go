@@ -41,6 +41,7 @@ var cloudCover = Default{Step: 10, Floor: -5}
 var baroPressure = Default{Step: 2.5, Floor: -1.25}
 var ceiling = Default{Step: 150, Floor: -75, Max: 3000}
 var geotiffOnly = Default{GeotiffOnly: true}
+var qpe = Default{Step: 2.5, Floor: 0.25, Max: 50}
 
 var Defaults = map[string]Default{
 	`wind-u-100hpa`:              uvVector,
@@ -237,4 +238,6 @@ var Defaults = map[string]Default{
 	`composite-reflectivity`: reflectivity,
 
 	`ceiling`: ceiling,
+
+	`qpe-1hr`: qpe,
 }
