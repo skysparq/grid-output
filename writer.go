@@ -73,6 +73,8 @@ func (w *Writer) Write(ctx context.Context, out Output) error {
 		return fmt.Errorf(`error writing %v/%v: no defaults for measure`, out.Table, out.Measure)
 	}
 
+	defaults.Backend = out.Backend
+
 	if defaults.GeotiffOnly {
 		for _, fix := range GeometryFixes(out.Table) {
 			fix(out.Grid)
