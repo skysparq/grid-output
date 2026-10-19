@@ -52,12 +52,14 @@ type Output struct {
 	SrsWKT string // the grid's native spatial ref
 
 	// Provenance, carried into the isoband properties and the metadata record.
-	Source          string // the isobands' "source" property
-	System          string
-	Subsystem       string
-	GridName        string
-	Url             string
-	Backend         gridtoisobands.Backend
+	Source    string // the isobands' "source" property
+	System    string
+	Subsystem string
+	GridName  string
+	Url       string
+	Backend   gridtoisobands.Backend
+	// SimplifyOptions overrides the table's isoband simplification (see Simplify). Leave nil
+	// to use the table's; an empty SimplifyOptions turns simplification off.
 	SimplifyOptions *contour.SimplifyOptions
 }
 
@@ -119,6 +121,10 @@ func (w *Writer) Write(ctx context.Context, out Output) error {
 // uploadIsobands contours out.Grid (applying the table's Transforms to it in place) and uploads
 // the isobands.
 func (w *Writer) uploadIsobands(ctx context.Context, out Output, defaults Default) error {
+	simplify := out.SimplifyOptions
+	if simplify == nil {
+		simplify = Simplify(out.Table)
+	}
 	args := &gridtoisobands.IsobandArgs{
 		Grid:         out.Grid,
 		Preprocesses: Transforms(out.Table),
@@ -127,7 +133,7 @@ func (w *Writer) uploadIsobands(ctx context.Context, out Output, defaults Defaul
 		Step:         defaults.Step,
 		WorkDir:      w.WorkDir,
 		Backend:      out.Backend,
-		Simplify:     out.SimplifyOptions,
+		Simplify:     simplify,
 	}
 	output, err := gridtoisobands.IsobandsFromGrid(ctx, args)
 	if err != nil {
