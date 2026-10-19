@@ -112,6 +112,8 @@ github.com/skysparq/grib2-go v0.5.3 h1:YXHoBBCOuOnK9o4XyYYMWobjd3iL1z+dwFkBRT5sm
 github.com/skysparq/grib2-go v0.5.3/go.mod h1:5o+perSL1gHU32xJ28g+q1KtRZS7S+FkyjXpNPlgcfI=
 github.com/skysparq/grid-to-isobands v0.0.38 h1:XH6sxlEwkMi1p5TWaiiNvb5pS4ytN3DNBwQfrQxyGH0=
 github.com/skysparq/grid-to-isobands v0.0.38/go.mod h1:mPAkloV9SOBoExSHWk3Tb/3WS8VcLi1sEFV/KDGHmkQ=
+github.com/skysparq/grid-to-isobands v0.1.0 h1:dttX9xV7wdKKAoffFMoWaWzKm+etmHC10PoFX6o0xIg=
+github.com/skysparq/grid-to-isobands v0.1.0/go.mod h1:u2fkdael4bY7uhiIE5WC14Gq2GRnYU6VvaTU6o1zzEg=
 github.com/stretchr/testify v1.10.0 h1:Xv5erBjTwe/5IxqUQTdXv5kgmIvbHo3QQyRwhJsOfJA=
 github.com/stretchr/testify v1.10.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/x448/float16 v0.8.4 h1:qLwI1I70+NjRFUR3zs1JPUCgaCXSh3SW62uAKT1mSBM=

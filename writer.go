@@ -123,6 +123,7 @@ func (w *Writer) uploadIsobands(ctx context.Context, out Output, defaults Defaul
 		Floor:        defaults.Floor,
 		Step:         defaults.Step,
 		WorkDir:      w.WorkDir,
+		Backend:      defaults.Backend,
 	}
 	output, err := gridtoisobands.IsobandsFromGrid(ctx, args)
 	if err != nil {

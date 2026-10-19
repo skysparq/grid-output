@@ -15,6 +15,7 @@ type Default struct {
 	// downstream derivations (which consume the geotiff) and are never rendered themselves. With
 	// no isobands to stay consistent with, the geotiff is also left unsmoothed.
 	GeotiffOnly bool
+	Backend     gridtoisobands.Backend
 }
 
 // Selections returns the isoband-only transforms implied by this default.
