@@ -24,6 +24,8 @@ func Simplify(table string) *contour.SimplifyOptions {
 		return &contour.SimplifyOptions{Tolerance: 500, MinRingArea: 10_000}
 	case `hrrr`: // 3 km
 		return &contour.SimplifyOptions{Tolerance: 600, MinRingArea: 15_000}
+	case `airnow`: // 0.0225° (~2.5 km north-south, ~2 km east-west across CONUS)
+		return &contour.SimplifyOptions{Tolerance: 500, MinRingArea: 10_000}
 	case `mrms`: // 0.01° (~1.1 km)
 		return &contour.SimplifyOptions{Tolerance: 250, MinRingArea: 2_000}
 	case `gfs`, `gdas`: // 0.25° (~27.8 km)

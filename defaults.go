@@ -43,6 +43,13 @@ var ceiling = Default{Step: 150, Floor: -75, Max: 3000}
 var geotiffOnly = Default{GeotiffOnly: true}
 var qpe = Default{Step: 2.5, Floor: 0.25, Max: 50}
 
+// AirNow AQI grids hold integer AQI values with missing cells outside monitor coverage. Edges at
+// x.5 put every EPA category breakpoint (50/51, 100/101, 150/151, 200/201, 300/301) on a band
+// edge, with several bands per category for a smoother gradient. The -24.5 floor gives AQI 0,
+// which is real clean air rather than missing data, its own band instead of a hole. Everything
+// above 300 is folded into a single Hazardous band.
+var aqi = Default{Step: 25, Floor: -24.5, Max: 300}
+
 var Defaults = map[string]Default{
 	`wind-u-100hpa`:              uvVector,
 	`wind-v-100hpa`:              uvVector,
@@ -240,4 +247,9 @@ var Defaults = map[string]Default{
 	`ceiling`: ceiling,
 
 	`qpe-1hr`: qpe,
+
+	`aqi-ozone`:    aqi,
+	`aqi-pm25`:     aqi,
+	`aqi-pm10`:     aqi,
+	`aqi-combined`: aqi,
 }
