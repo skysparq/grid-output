@@ -16,7 +16,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/sns"
-	"github.com/google/uuid"
 	gridtoisobands "github.com/skysparq/grid-to-isobands"
 	"github.com/skysparq/grid-to-isobands/contour"
 )
@@ -151,8 +150,7 @@ func (w *Writer) uploadIsobands(ctx context.Context, out Output, defaults Defaul
 	if err != nil {
 		return fmt.Errorf(`error encoding isobands: %w`, err)
 	}
-	filename := fmt.Sprintf(`%v-%v-%v.geojson`, out.Measure, out.At.Format(`20060102T150405`), uuid.NewString())
-	key := fmt.Sprintf(`%v/%v`, IsobandPrefix(out.Table), filename)
+	key := IsobandKey(out.Table, out.Measure, out.At, out.CycleTime)
 	_, err = w.S3.PutObject(ctx, &s3.PutObjectInput{
 		Bucket:      aws.String(IsobandBucket(w.Env)),
 		Key:         aws.String(key),
@@ -163,7 +161,7 @@ func (w *Writer) uploadIsobands(ctx context.Context, out Output, defaults Defaul
 		return fmt.Errorf(`error uploading isobands: %w`, err)
 	}
 
-	println(fmt.Sprintf(`INFO published %s to %s`, out.Measure, filename))
+	println(fmt.Sprintf(`INFO published %s to %s`, out.Measure, key))
 
 	return nil
 }
